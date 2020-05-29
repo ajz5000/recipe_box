@@ -1,0 +1,13 @@
+<!-- templates/recipe_new.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<main>
+    <h3>New Recipe</h3>
+    <form action="" method="post">{% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Save">
+    </form>
+</main>
+{% endblock content %}

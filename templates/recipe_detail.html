@@ -1,0 +1,27 @@
+<!-- tempaltes/recipe_detail.html -->
+
+{% extends 'base.html' %}
+
+{%block content %}
+    <div class="submenu">
+        <a href="{% url 'recipe_new' %}">New Recipe</a>
+        <a href="{% url 'recipe_edit' recipe.id %}">Edit Recipe</a>
+        <a href="{% url 'recipe_delete' recipe.id %}">Delete Recipe</a>
+    </div>
+    <main>
+        <div class="recipe-detail">
+            <h2>{{ recipe.name }}</h2>
+            <p>Servings: {{ recipe.servings }}</p>
+            <p>Prep Time: {{ recipe.prep_time }}</p>
+            <p>Cook Time: {{ recipe.cook_time }}</p>
+            <ul>
+                {% for recipeingredient in recipe.recipeingredient_set.all %}
+                    {{recipeingredient.quantity}} {{recipeingredient.units}} {{recipeingredient.ingredient}}<br>
+                {% empty %}
+                    <p>No ingredients</p>
+                {% endfor %}
+            </ul>
+            <p>Directions: {{ recipe.directions }}</p>
+        </div>
+    </main>
+{% endblock content %}

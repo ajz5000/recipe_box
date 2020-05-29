@@ -1,0 +1,14 @@
+<!-- templates/recipe_delete.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+    <main>
+        <h3>Delete Recipe</h3>
+        <form action="" method="post">{% csrf_token %}
+            <p>Are you sure you want to delete "{{ recipe.name }}"?</p>
+            <input type="submit" value="Confirm">
+        </form>
+    </main>
+
+{% endblock content %}
