@@ -11,17 +11,33 @@
     <main>
         <div class="recipe-detail">
             <h2>{{ recipe.name }}</h2>
-            <p>Servings: {{ recipe.servings }}</p>
             <p>Prep Time: {{ recipe.prep_time }}</p>
-            <p>Cook Time: {{ recipe.cook_time }}</p>
+            <p>Cook Time: {{ recipe.cook_time }}</p>            
+            <p>Servings: {{ recipe.servings }}  |  
+                <label for="multiplier">Multiplier: </label>
+                <select name="mulitplier" id="multiplier">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+            </p>
+            <h3>Ingredients</h3>
             <ul>
                 {% for recipeingredient in recipe.recipeingredient_set.all %}
-                    {{recipeingredient.quantity}} {{recipeingredient.units}} {{recipeingredient.ingredient}}<br>
+                    <li>{{ recipeingredient.quantity }} {{ recipeingredient.units }} {{ recipeingredient.ingredient }}</li>
                 {% empty %}
-                    <p>No ingredients</p>
+                    <li>No ingredients</li>
                 {% endfor %}
             </ul>
-            <p>Directions: {{ recipe.directions }}</p>
+            <h3>Directions</h3>
+            <p>{{ recipe.directions }}</p>
         </div>
     </main>
 {% endblock content %}
