@@ -4,8 +4,17 @@ from django.urls import reverse
 # Create your models here.
 class Unit(models.Model):
     
+    VOLUME = 'VOLUME'
+    MASS = 'MASS'
+
+    MEASURE_CHOICES = [
+        (VOLUME, 'Volume'),
+        (MASS, 'Mass'),
+    ]
+
     name = models.CharField(max_length = 20)
     abbreviation = models.CharField(max_length = 5)
+    mesaure = models.CharField(max_length = 20, choices = MEASURE_CHOICES, default = VOLUME)
 
     def __str__(self):
         return self.name
@@ -73,6 +82,7 @@ class RecipeIngredient(models.Model):
     ingredient = models.ForeignKey(Ingredient, on_delete = models.CASCADE)
     quantity = models.DecimalField(decimal_places=2, max_digits=4)
     units = models.ForeignKey(Unit, on_delete=models.CASCADE)
+    style = models.TextField(default="")
 
     def __str__(self):
         return self.recipe.name + ": " + self.ingredient.name
