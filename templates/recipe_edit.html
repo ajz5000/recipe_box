@@ -6,7 +6,12 @@
     <main>
         <h3>Edit Recipe</h3>
         <form action="" method="post">{% csrf_token %}
-            {{ form.as_p }} 
+            {{ form.as_p }}
+            <ul>
+                {% for recipeingredient in recipe.recipeingredient_set.all %}
+                    <li>{{ recipeingredient.ingredient }} <input type="text" name="" value="{{ recipeingredient.quantity }}"></li>
+                {% endfor %}
+            </ul>
             <input type="submit" value="Update">
         </form>
     </main>

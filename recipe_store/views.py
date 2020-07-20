@@ -26,7 +26,7 @@ class RecipeUpdateView(UpdateView):
     model = Recipe
     template_name = 'recipe_edit.html'
     #need to add Ingredients to fields once I understand how the selection should work
-    fields = ['name', 'type', 'servings', 'prep_time', 'cook_time', 'directions']
+    fields = ['name', 'type', 'servings', 'prep_time', 'cook_time', 'ingredients', 'directions']
 
 class RecipeDeleteView(DeleteView):
     model = Recipe

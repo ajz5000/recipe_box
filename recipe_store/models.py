@@ -4,17 +4,18 @@ from django.urls import reverse
 # Create your models here.
 class Unit(models.Model):
     
-    VOLUME = 'VOLUME'
-    MASS = 'MASS'
+    # Not sure if I care about what type of measure this is
+    #VOLUME = 'VOLUME'
+    #MASS = 'MASS'
 
-    MEASURE_CHOICES = [
-        (VOLUME, 'Volume'),
-        (MASS, 'Mass'),
-    ]
+    #MEASURE_CHOICES = [
+    #    (VOLUME, 'Volume'),
+    #    (MASS, 'Mass'),
+    #]
 
     name = models.CharField(max_length = 20)
     abbreviation = models.CharField(max_length = 5)
-    mesaure = models.CharField(max_length = 20, choices = MEASURE_CHOICES, default = VOLUME)
+    #measure = models.CharField(max_length = 20, choices = MEASURE_CHOICES, default = VOLUME)
 
     def __str__(self):
         return self.name

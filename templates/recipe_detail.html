@@ -17,6 +17,7 @@
                 <label for="multiplier">Multiplier: </label>
                 <select name="mulitplier" id="multiplier">
                     <option value="1" selected="selected">1</option>
+                    <!--<option value="1">1</option>-->
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="4">4</option>
@@ -31,7 +32,13 @@
             <h3>Ingredients</h3>
             <ul>
                 {% for recipeingredient in recipe.recipeingredient_set.all %}
-                    <li>{{ recipeingredient.quantity }} {{ recipeingredient.units }} {{ recipeingredient.ingredient }}</li>
+                    <li><span class="ing_qty">{{ recipeingredient.quantity }}</span> {{ recipeingredient.units }} {{ recipeingredient.ingredient }}
+                        {% if recipeingredient.style == "" %}
+                            </li>
+                        {% else %}
+                            - {{recipeingredient.style }}</li>
+                        {% endif %}
+                    
                 {% empty %}
                     <li>No ingredients</li>
                 {% endfor %}
@@ -40,4 +47,19 @@
             <p>{{ recipe.directions }}</p>
         </div>
     </main>
+    <script type="text/javascript">
+        const a = document.getElementById("multiplier");
+        a.addEventListener("change", multiply_ings);
+        
+        // TODO - figure out how to store the original quantities to prevent layering successive multiplications
+        function multiply_ings() {
+            var mult = document.getElementById("multiplier");
+            var qtys = document.getElementsByClassName("ing_qty");
+            for (i=0; i < qtys.length; i++) {
+                qtys[i].innerHTML = parseFloat(qtys[i].innerHTML) * parseFloat(mult.options[mult.selectedIndex].value);
+                //alert(qtys[i].innerHTML);
+            }
+        }
+
+    </script>
 {% endblock content %}
