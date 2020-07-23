@@ -5,13 +5,20 @@
 {% block content %}
     <main>
         <h3>Edit Recipe</h3>
-        <form action="" method="post">{% csrf_token %}
-            {{ form.as_p }}
+        <form action="" method="post">
+            {% csrf_token %}
+            <!-- Recipe object form fields render properly, but update function does not work. Recipe Ingredient items to not render-->
+            {{ recipe_form.as_p }}<!---->
+            {% for recipeingredient in recipeingredient_forms %}
+                <p>{{ recipeingredient.ingredient }}{{ recipeingredient.quantity }}{{ recipeingredient.units }}</p>
+            {% endfor %}
+            <!-- Leaving this out for now. Does not render, context object model in the view was modified and now this section does not render -->
+            <!--
             <ul>
                 {% for recipeingredient in recipe.recipeingredient_set.all %}
-                    <li>{{ recipeingredient.ingredient }} <input type="text" name="" value="{{ recipeingredient.quantity }}"></li>
+                    <li><label for="{{ recipeingredient.id }}">{{ recipeingredient.ingredient }}: </label><input type="text" name="{{ recipeingredient.ingredient }}" value="{{ recipeingredient.quantity }}" id="{{ recipeingredient.id }}"></li>
                 {% endfor %}
-            </ul>
+            </ul>-->
             <input type="submit" value="Update">
         </form>
     </main>

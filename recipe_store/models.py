@@ -66,8 +66,8 @@ class Recipe(models.Model):
     name = models.CharField(max_length = 100)
     type = models.CharField(max_length = 20, choices = TYPE_CHOICES, default = AMERICAN)
     servings = models.IntegerField()
-    prep_time = models.DecimalField(decimal_places=2, max_digits=5)
-    cook_time = models.DecimalField(decimal_places=2, max_digits=5)
+    prep_time = models.DecimalField(decimal_places=2, max_digits=5) # TODO - change this to an int to hold minutes
+    cook_time = models.DecimalField(decimal_places=2, max_digits=5) # TODO - change this to an int to hold minutes
     ingredients = models.ManyToManyField(Ingredient, through='RecipeIngredient')
     directions = models.TextField()
 
@@ -90,5 +90,5 @@ class RecipeIngredient(models.Model):
 
     def get_absolute_url(self):
         pass
-        #TO-DO
+        # TODO
         #return reverse('')

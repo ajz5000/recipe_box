@@ -38,7 +38,7 @@
                 {% endfor %}
             </ul>
             <h3>Directions</h3>
-            <p>{{ recipe.directions }}</p>
+            <p>{{ recipe.directions|linebreaksbr }}</p> <!--Added linebreaksbr - treats line breaks as new paragraphs -->
         </div>
     </main>
     <script type="text/javascript">
@@ -56,6 +56,7 @@
         }
 
         // Scales the recipe ingredients and number of servings by the factor in the dropdown (factor = new multipler / old multiplier)
+        // TODO - add rounding and data loss prevention
         function multiply_ings() {
             var mult = document.getElementById("multiplier");
             var qtys = document.getElementsByClassName("ing_qty");
