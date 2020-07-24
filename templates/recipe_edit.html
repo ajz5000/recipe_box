@@ -7,18 +7,21 @@
         <h3>Edit Recipe</h3>
         <form action="" method="post">
             {% csrf_token %}
-            <!-- Recipe object form fields render properly, but update function does not work. Recipe Ingredient items to not render-->
-            {{ recipe_form.as_p }}<!---->
+            
+            <p>Name: {{ recipe_form.name }}</p>
+            <p>Type: {{ recipe_form.type }}</p>
+            <p>Prep Time: {{ recipe_form.prep_time }}</p>
+            <p>Cook Time: {{ recipe_form.cook_time }}</p>
+            <p>Servings: {{ recipe_form.servings }}</p>
+            
+            <!--{{ recipe_form.as_p }}-->
+
+            <h3>Ingredients</h3>
             {% for recipeingredient in recipeingredient_forms %}
-                <p>{{ recipeingredient.ingredient }}{{ recipeingredient.quantity }}{{ recipeingredient.units }}</p>
+                <p>{{ recipeingredient.ingredient }}{{ recipeingredient.quantity }}{{ recipeingredient.units }}{{ recipeingredient.style }}</p>
             {% endfor %}
-            <!-- Leaving this out for now. Does not render, context object model in the view was modified and now this section does not render -->
-            <!--
-            <ul>
-                {% for recipeingredient in recipe.recipeingredient_set.all %}
-                    <li><label for="{{ recipeingredient.id }}">{{ recipeingredient.ingredient }}: </label><input type="text" name="{{ recipeingredient.ingredient }}" value="{{ recipeingredient.quantity }}" id="{{ recipeingredient.id }}"></li>
-                {% endfor %}
-            </ul>-->
+            <h3>Directions</h3>
+            <p>{{ recipe_form.directions }}</p>
             <input type="submit" value="Update">
         </form>
     </main>

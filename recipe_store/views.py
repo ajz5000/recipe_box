@@ -32,19 +32,31 @@ def recipe_edit(request, pk):
     ingredients = RecipeIngredient.objects.all().filter(recipe_id=pk)
     if request.method == "POST":
         r_form = RecipeForm(request.POST, instance=recipe)
-        ri_forms = [RecipeIngredientForm(request.POST, prefix=str(x), instance=ingredients[x]) for x in range(len(ingredients))]
+        ri_forms = [RecipeIngredientForm(request.POST, prefix=str(x), instance=ingredients[x]) for x in range(len
+        (ingredients))]
 
-        if r_form.is_valid():# and all([ri_form.is_valid() for ri_form in ri_forms]):
-            recipe = r_form.save()
-        #if r_form.is_valid() and all([ri_form.is_valid() for ri_form in ri_forms]):
+        # test = all([ri_form.is_valid() for ri_form in ri_forms])
+        # test1 = r_form.is_valid()
+        
+
+        # if r_form.is_valid():# and all([ri_form.is_valid() for ri_form in ri_forms]):
+        #     recipe = r_form.save()
+        #     # DEBUG
+        #     import pdb; pdb.set_trace()
+
+        if r_form.is_valid() and all([ri_form.is_valid() for ri_form in ri_forms]):
             #recipe = r_form.save(commit=False)
-         #   r_form.save()
+            recipe = r_form.save()
+            
+            # TODO - WORK ON RECIPEINGREDIENT PROCESSING
+            for ri_form in ri_forms:
+                ri_form.save()
+
+            
 
             return HttpResponseRedirect(recipe.get_absolute_url())#, pk=recipe.pk)
 
-            # TODO - WORK ON RECIPEINGREDIENT PROCESSING
-            for ri_form in ri_forms:
-                pass
+           
     else:
         r_form = RecipeForm(instance=recipe)
         ri_forms = [RecipeIngredientForm(prefix=str(x), instance=ingredients[x]) for x in range(len(ingredients))]
