@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="submenu">
+        <a href="{% url 'ingredient_edit' ingredient.id %}">Edit Ingredient</a>
+        <a href="{% url 'ingredient_delete' ingredient.id %}">Delete Ingredient</a>
+    </div>   
+    <main>
+        <h2>{{ ingredient.name }}</h2>
+    </main> 
+{% endblock content %}
