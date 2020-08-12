@@ -3,20 +3,26 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <div class="submenu">
+        <a href="{% url 'recipe_new' %}">New Recipe</a>
+        <span> // </span>
+        <a href="{% url 'ingredients' %}">Ingredients</a>
+        <span> // </span>
+
+    </div> 
     <main>
         <h3>Edit Recipe</h3>
         <form action="" method="post">
             {% csrf_token %}
             
             <p>Name: {{ recipe_form.name }}</p>
-            <p>Type: {{ recipe_form.type }}</p>
             <p>Prep Time: {{ recipe_form.prep_time }}</p>
             <p>Cook Time: {{ recipe_form.cook_time }}</p>
             <p>Servings: {{ recipe_form.servings }}</p>
             
-            <!--{{ recipe_form.as_p }}-->
 
             <h3>Ingredients</h3>
+            <a href="">+ Add Ingredient</a>
             {% for recipeingredient in recipeingredient_forms %}
                 <p>{{ recipeingredient.ingredient }}{{ recipeingredient.quantity }}{{ recipeingredient.units }}{{ recipeingredient.style }}</p>
             {% endfor %}

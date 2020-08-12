@@ -33,9 +33,7 @@ class Ingredient(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        pass
-        #TO-DO
-        #return reverse('')    
+        return reverse('ingredient_detail', args=[str(self.id)])  
 
 class PantryItem(models.Model):
 
