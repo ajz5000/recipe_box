@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <main>
+        <h3>Edit Recipe Ingredients</h3>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            
+            <input type="submit" value="Update">
+        </form>
+    </main>
+
+{% endblock content %}
