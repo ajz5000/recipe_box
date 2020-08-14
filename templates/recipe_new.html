@@ -4,7 +4,7 @@
 
 {% block content %}
 <main>
-    <h3>New Recipe</h3>
+    <h2>New Recipe</h2>
     <form action="" method="post">{% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Save">
