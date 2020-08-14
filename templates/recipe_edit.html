@@ -11,7 +11,7 @@
 
     </div> 
     <main>
-        <h3>Edit Recipe</h3>
+        <h2>Edit Recipe</h2>
         <form action="" method="post">
             {% csrf_token %}
             
@@ -22,10 +22,25 @@
             
 
             <h3>Ingredients</h3>
-            <a href="">+ Add Ingredient</a>
-            {% for recipeingredient in recipeingredient_forms %}
-                <p>{{ recipeingredient.ingredient }}{{ recipeingredient.quantity }}{{ recipeingredient.units }}{{ recipeingredient.style }}</p>
-            {% endfor %}
+            
+            
+            <table>
+                <tr>
+                    <th>Ingredient</th>
+                    <th>Qty</th>
+                    <th>Units</th>
+                    <th>Style</th>
+                </tr>
+                {% for recipeingredient in recipeingredient_forms %}
+                    <tr>
+                        <td>{{ recipeingredient.ingredient }}</td>
+                        <td>{{ recipeingredient.quantity }}</td>
+                        <td>{{ recipeingredient.units }}</td>
+                        <td>{{ recipeingredient.style }}</td>
+                    </tr>
+                {% endfor %}         
+            </table>
+            <a href="#">+ Add Ingredient</a>
             <h3>Directions</h3>
             <p>{{ recipe_form.directions }}</p>
             <input type="submit" value="Update">

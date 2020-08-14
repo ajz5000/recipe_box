@@ -8,12 +8,23 @@
         <span> // </span>
     </div>   
     <main>
-        <ul>
+        <table>
+            <tr>
+                <th>Ingredient</th>
+                <th>Qty</th>
+                <th>Measure</th>
+            </tr>
             {% for item in pantry_items %}
-                <li>{{ item.item }} {{ item.quantity }} {{ item.units }}</li>
+                <tr>
+                    <td>{{ item.item }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.units }}</td>
+                </tr>
             {% empty %}
-                <li>Pantry empty!</li>
+                <tr>
+                    <td colspan="3">Empty Pantry!</td>
+                </tr>
             {% endfor %}
-        </ul>
+        </table>
     </main> 
 {% endblock content %}
