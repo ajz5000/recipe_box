@@ -25,9 +25,16 @@ def qty_to_num(string)-> float:
     
     return num
 
+def is_number(s):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False
 
 ##### Pull in raw text from formatted file #####
-with open("/Users/adamzadnik/Documents/Recipes/Exports from Notes/chickpea_salad_raw.txt","r") as f:
+#with open("/Users/adamzadnik/Documents/Recipes/Exports from Notes/chickpea_salad_raw.txt","r") as f:
+with open("ETL/TestData/quinoa_salad_raw.txt","r") as f:
     raw_text = f.read()
 
 split_text = raw_text.split("\n")
@@ -62,12 +69,28 @@ rec_type = split_text[type_start][6:]
 # TODO - lookup for recipe types
 
 ##### PREP TIME #####
-prep = split_text[prep_start][11:]
-if prep == "N/A":
+prep_text = split_text[prep_start][11:]
+if prep_text == "N/A":
     prep = 0.0
+else:
+    split_prep_text = prep_text.split(' ')
+    prep_qty = split_prep_text[0]
+    try:
+        prep_units = split_prep_text[1]
+    except:
+        print('Missing units on prep time, assuming in minutes')
+        prep_units = 'mins'
+
+    if prep_units == 'min' or prep_units == 'mins':
+        prep = prep_qty
+    elif prep_units == 'hr' or prep_units == 'hrs':
+        prep = prep_qty * 60
+    else:
+        raise Exception('Check prep time units, can only be "mins" or "hr/hrs"')
 
 
 ##### COOK TIME #####
+# TODO - remove unit of time, convert to minutes
 cook = split_text[cook_start][11:]
 if cook == "N/A":
     cook = 0.0
@@ -78,24 +101,41 @@ servings = float(split_text[servings_start][10:])
 
 
 ##### INGREDIENTS #####
+# Assumed input format = (QTY) (Measure) (Ingredient name) , (Misc style text. Ex, chopped, sliced)
+# 1. Gather the ingredients data from within the calculated bounds of the split text list
+# 2. Remove bullet points
+# 3. Break each ingredient line up into a list of words
+
 ing_list = split_text[ing_start+1:dir_start-1]
 ing_list = [x.replace('* ','') for x in ing_list]
 ing_list = [x.split(" ") for x in ing_list]
 
 for y in ing_list:
 
-    ing_temp = " ".join(y[2:])
-    del y[3:]
+    a = []
 
+    # Process ingredients with finite quantities
+    if is_number(y[0]) or ('/' in y[0]):
+        ing_temp = " ".join(y[2:])
+        a.append(qty_to_num(y[0])) #a[0]
+        a.append(y[1].lower()) # a[1]
+    # Process ingredients with indefinite quantities
+    else:
+        ing_temp = " ".join(y)
+        a.append(0) #a[0]
+        a.append('N/A') #a[1]
+
+    # Process ingredient properties, exception catches items without style data
     try:
         style_start = ing_temp.index(",")
-        y[2] = ing_temp[:style_start].lower()
-        y.append(ing_temp[style_start+2:].lower())
+        a.append(ing_temp[:style_start].lower()) # a[2]
+        a.append(ing_temp[style_start+2:].lower()) # a[3]
     except ValueError:
-        y[2] = ing_temp.lower()
-        y.append("")
+        a.append(ing_temp.lower()) # a[2]
+        a.append("") # a[3]
 
-    ingredients[y[2]] = {"qty" : qty_to_num(y[0]), "measure" : y[1].lower(), "style" : y[3]}
+
+    ingredients[a[2]] = {"qty" : a[0], "measure" : a[1], "style" : a[3]}
 
 
 ##### DIRECTIONS #####
