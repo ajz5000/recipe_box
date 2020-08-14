@@ -6,8 +6,8 @@ from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
-
 from .models import Recipe, RecipeIngredient, Ingredient, PantryItem
+
 
 # Create your views here.
 class RecipeListView(ListView):
@@ -33,8 +33,6 @@ def recipe_edit(request, pk):
     if request.method == "POST":
         r_form = RecipeForm(request.POST, instance=recipe)
         ri_forms = [RecipeIngredientForm(request.POST, prefix=str(x), instance=ingredients[x]) for x in range(len(ingredients))]
-
-        
 
         if r_form.is_valid() and all([ri_form.is_valid() for ri_form in ri_forms]):
             #recipe = r_form.save(commit=False)
