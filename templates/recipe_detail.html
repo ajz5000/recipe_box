@@ -27,13 +27,14 @@
             <h3>Ingredients</h3>
             <ul>
                 {% for recipeingredient in recipe.recipeingredient_set.all %}
-                    <li><span class="ing_qty">{{ recipeingredient.quantity }}</span> {{ recipeingredient.units }} {{ recipeingredient.ingredient }}
+                    <li>{% if recipeingredient.quantity != 0 %}<span class="ing_qty">{{ recipeingredient.quantity }}</span> {{ recipeingredient.units }}
+                        {% endif %}
+                        {{ recipeingredient.ingredient }}
                         {% if recipeingredient.style == "" %}
                             </li>
                         {% else %}
                             - {{recipeingredient.style }}</li>
                         {% endif %}
-                    
                 {% empty %}
                     <li>No ingredients</li>
                 {% endfor %}
